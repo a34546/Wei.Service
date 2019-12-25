@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Service", "Wei.Service\Wei.Service.csproj", "{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{A8542ABA-3107-472B-ABB3-1A06FF6F3A10}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Service.Test", "Wei.Service.Test\Wei.Service.Test.csproj", "{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3} = {A8542ABA-3107-472B-ABB3-1A06FF6F3A10}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BD31795-5CC3-4FE1-90A5-6239D0E7F559}
+	EndGlobalSection
+EndGlobal
