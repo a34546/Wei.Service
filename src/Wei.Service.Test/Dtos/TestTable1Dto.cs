@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Wei.Service.Test
 {
-    public class TestEntity1Dto
+    public class TestTable1Dto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string TestMethodName { get; set; }
         public string TestResult { get; set; }
     }
 }

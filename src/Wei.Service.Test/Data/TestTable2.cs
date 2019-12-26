@@ -5,7 +5,7 @@ using Wei.Repository;
 
 namespace Wei.Service.Test
 {
-    public class TestEntity2 : Entity
+    public class TestTable2 : Entity
     {
         public string TestMethodName { get; set; }
         public string TestResult { get; set; }

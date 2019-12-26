@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{A8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Service.Test", "Wei.Service.Test\Wei.Service.Test.csproj", "{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{BD9189A1-E937-40E2-831B-F30B430049CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiDemo", "WebApiDemo\WebApiDemo.csproj", "{FA986C5B-EAF6-4656-92CD-73F5A0841793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,12 +27,17 @@ Global
 		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA986C5B-EAF6-4656-92CD-73F5A0841793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA986C5B-EAF6-4656-92CD-73F5A0841793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA986C5B-EAF6-4656-92CD-73F5A0841793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA986C5B-EAF6-4656-92CD-73F5A0841793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3} = {A8542ABA-3107-472B-ABB3-1A06FF6F3A10}
+		{FA986C5B-EAF6-4656-92CD-73F5A0841793} = {BD9189A1-E937-40E2-831B-F30B430049CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BD31795-5CC3-4FE1-90A5-6239D0E7F559}

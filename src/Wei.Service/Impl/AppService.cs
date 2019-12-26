@@ -10,9 +10,9 @@ using Wei.Repository;
 namespace Wei.Service
 {
 
-    public class AppService<TEntity, TDto> : AppService<TEntity, TDto, int>, IAppService<TEntity, TDto> where TDto : class where TEntity : class, IEntity<int>
+    public class AppService<TEntity, TDto> : AppService<TEntity, TDto, int>, IAppService<TEntity, TDto> where TDto : class where TEntity : class, IEntity
     {
-        public AppService(IRepository<TEntity, int> repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
+        public AppService(IRepository<TEntity> repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
         {
         }
     }
@@ -37,67 +37,82 @@ namespace Wei.Service
         {
             await _unitOfWork.SaveChangesAsync();
         }
+        public Action<IBindingConfig<TDto, TEntity>> MapToEntityConfig = default;
+        public Action<IBindingConfig<TEntity, TDto>> MapToDtoConfig = default;
 
         public virtual TEntity ToEntity(TDto dto)
         {
-            return dto.MapTo<TDto, TEntity>();
+            return dto.MapTo(MapToEntityConfig);
         }
 
         public virtual TDto ToDto(TEntity entity)
         {
-            return entity.MapTo<TEntity, TDto>();
+            return entity.MapTo(MapToDtoConfig);
         }
 
         public virtual List<TEntity> ToEntities(List<TDto> dtos)
         {
+            if (MapToEntityConfig != default && !TinyMapper.BindingExists<TDto, TEntity>()) TinyMapper.Bind(MapToEntityConfig);
             return dtos.MapTo<List<TDto>, List<TEntity>>();
         }
 
         public virtual List<TDto> ToDtos(List<TEntity> entities)
         {
+            if (MapToDtoConfig != default && !TinyMapper.BindingExists<TEntity, TDto>()) TinyMapper.Bind(MapToDtoConfig);
             return entities.MapTo<List<TEntity>, List<TDto>>();
         }
 
         #region Get
-        public virtual TDto GetById(TPrimaryKey id)
+        public virtual TDto Get(TPrimaryKey id)
         {
-            var entity = Repository.GetById(id);
+            var entity = Repository.Get(id);
             return ToDto(entity);
         }
-        public virtual TDto GetByIdNoTracking(TPrimaryKey id)
+
+        public virtual async Task<TDto> GetAsync(TPrimaryKey id)
         {
-            var entity = Repository.GetByIdNoTracking(id);
+            var entity = await Repository.GetAsync(id);
             return ToDto(entity);
         }
-        public virtual List<TDto> GetAllList()
+        public virtual List<TDto> GetAll()
         {
-            var entities = Repository.GetAllList();
+            var entities = Repository.GetAll();
             return ToDtos(entities);
         }
-        public virtual List<TDto> GetAllList(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<List<TDto>> GetAllAsync()
         {
-            var entities = Repository.GetAllList(predicate);
+            var entities = await Repository.GetAllAsync();
             return ToDtos(entities);
         }
-        public virtual async Task<TDto> GetByIdAsync(TPrimaryKey id)
+        public virtual List<TDto> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
-            var entity = await Repository.GetByIdAsync(id);
+            var entities = Repository.GetAll(predicate);
+            return ToDtos(entities);
+        }
+        public virtual async Task<List<TDto>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = await Repository.GetAllAsync(predicate);
+            return ToDtos(entities);
+        }
+        public virtual TDto FirstOrDefault()
+        {
+            var entity = Repository.FirstOrDefault();
             return ToDto(entity);
         }
-        public virtual async Task<TDto> GetByIdNoTrackingAsync(TPrimaryKey id)
+        public virtual async Task<TDto> FirstOrDefaultAsync()
         {
-            var entity = await Repository.GetByIdNoTrackingAsync(id);
+            var entity = await Repository.FirstOrDefaultAsync();
             return ToDto(entity);
         }
-        public virtual async Task<List<TDto>> GetAllListAsync()
+        public virtual TDto FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
-            var entities = await Repository.GetAllListAsync();
-            return ToDtos(entities);
+            var entity = Repository.FirstOrDefault(predicate);
+            return ToDto(entity);
         }
-        public virtual async Task<List<TDto>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TDto> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var entities = await Repository.GetAllListAsync(predicate);
-            return ToDtos(entities);
+            var entity = await Repository.FirstOrDefaultAsync(predicate);
+            return ToDto(entity);
         }
         #endregion
 
@@ -109,18 +124,18 @@ namespace Wei.Service
             _unitOfWork.SaveChanges();
             return ToDto(entity);
         }
-        public virtual void Insert(List<TDto> dtos)
-        {
-            var entities = ToEntities(dtos);
-            Repository.Insert(entities);
-            _unitOfWork.SaveChanges();
-        }
         public virtual async Task<TDto> InsertAsync(TDto dto)
         {
             var entity = ToEntity(dto);
             await Repository.InsertAsync(entity);
             await _unitOfWork.SaveChangesAsync();
             return ToDto(entity);
+        }
+        public virtual void Insert(List<TDto> dtos)
+        {
+            var entities = ToEntities(dtos);
+            Repository.Insert(entities);
+            _unitOfWork.SaveChanges();
         }
         public virtual async Task InsertAsync(List<TDto> dtos)
         {
@@ -139,18 +154,6 @@ namespace Wei.Service
             _unitOfWork.SaveChanges();
             return ToDto(entity);
         }
-        public virtual void Update(List<TDto> dtos)
-        {
-            var entities = ToEntities(dtos);
-            Repository.Update(entities);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual TEntity Update(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
-        {
-            Repository.Update(entity, properties);
-            _unitOfWork.SaveChanges();
-            return entity;
-        }
         public virtual async Task<TDto> UpdateAsync(TDto dto)
         {
             var entity = ToEntity(dto);
@@ -158,39 +161,12 @@ namespace Wei.Service
             await _unitOfWork.SaveChangesAsync();
             return ToDto(entity);
         }
-        public virtual async Task UpdateAsync(List<TDto> dtos)
-        {
-            var entities = ToEntities(dtos);
-            await Repository.UpdateAsync(entities);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        public virtual async Task<TEntity> UpdateAsync(TEntity entity, params Expression<Func<TEntity, object>>[] properties)
-        {
-            await Repository.UpdateAsync(entity, properties);
-            await _unitOfWork.SaveChangesAsync();
-            return entity;
-        }
         #endregion
 
-        #region Delete/HardDelete
+        #region Delete
         public virtual void Delete(TPrimaryKey id)
         {
             Repository.Delete(id);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void Delete(TEntity entity)
-        {
-            Repository.Delete(entity);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void Delete(IEnumerable<TEntity> entities)
-        {
-            Repository.Delete(entities);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void Delete(Expression<Func<TEntity, bool>> predicate)
-        {
-            Repository.Delete(predicate);
             _unitOfWork.SaveChanges();
         }
         public virtual async Task DeleteAsync(TPrimaryKey id)
@@ -198,39 +174,32 @@ namespace Wei.Service
             await Repository.DeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
+        public virtual void Delete(TEntity entity)
+        {
+            Repository.Delete(entity);
+            _unitOfWork.SaveChanges();
+        }
         public virtual async Task DeleteAsync(TEntity entity)
         {
             await Repository.DeleteAsync(entity);
             await _unitOfWork.SaveChangesAsync();
         }
-        public virtual async Task DeleteAsync(IEnumerable<TEntity> entities)
+        public virtual void Delete(Expression<Func<TEntity, bool>> predicate)
         {
-            await Repository.DeleteAsync(entities);
-            await _unitOfWork.SaveChangesAsync();
+            Repository.Delete(predicate);
+            _unitOfWork.SaveChanges();
         }
         public virtual async Task DeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             await Repository.DeleteAsync(predicate);
             await _unitOfWork.SaveChangesAsync();
         }
+        #endregion
+
+        #region HardDelete
         public virtual void HardDelete(TPrimaryKey id)
         {
             Repository.HardDelete(id);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void HardDelete(TEntity entity)
-        {
-            Repository.HardDelete(entity);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void HardDelete(IEnumerable<TEntity> entities)
-        {
-            Repository.HardDelete(entities);
-            _unitOfWork.SaveChanges();
-        }
-        public virtual void HardDelete(Expression<Func<TEntity, bool>> predicate)
-        {
-            Repository.HardDelete(predicate);
             _unitOfWork.SaveChanges();
         }
         public virtual async Task HardDeleteAsync(TPrimaryKey id)
@@ -238,20 +207,77 @@ namespace Wei.Service
             await Repository.HardDeleteAsync(id);
             await _unitOfWork.SaveChangesAsync();
         }
+        public virtual void HardDelete(TEntity entity)
+        {
+            Repository.HardDelete(entity);
+            _unitOfWork.SaveChanges();
+        }
         public virtual async Task HardDeleteAsync(TEntity entity)
         {
             await Repository.HardDeleteAsync(entity);
             await _unitOfWork.SaveChangesAsync();
         }
-        public virtual async Task HardDeleteAsync(IEnumerable<TEntity> entities)
+        public virtual void HardDelete(Expression<Func<TEntity, bool>> predicate)
         {
-            await Repository.HardDeleteAsync(entities);
-            await _unitOfWork.SaveChangesAsync();
+            Repository.HardDelete(predicate);
+            _unitOfWork.SaveChanges();
         }
         public virtual async Task HardDeleteAsync(Expression<Func<TEntity, bool>> predicate)
         {
             await Repository.HardDeleteAsync(predicate);
             await _unitOfWork.SaveChangesAsync();
+        }
+        #endregion
+
+        #region Aggregate
+        public bool Any(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Repository.Any(predicate);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Repository.AnyAsync(predicate);
+        }
+
+        public int Count()
+        {
+            return Repository.Count();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await Repository.CountAsync();
+        }
+
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Repository.Count(predicate);
+        }
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Repository.CountAsync(predicate);
+        }
+
+        public long LongCount()
+        {
+            return Repository.LongCount();
+        }
+
+        public async Task<long> LongCountAsync()
+        {
+            return await Repository.LongCountAsync();
+        }
+
+        public long LongCount(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Repository.LongCount(predicate);
+        }
+
+        public async Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await Repository.LongCountAsync(predicate);
         }
         #endregion
     }
