@@ -54,12 +54,8 @@ public class UserAppService : AppService<User, UserDto>, IUserAppService
 		//EntityToDto
 		base.MapToDtoConfig = config =>
 		{
-			config.Ignore(x => x.Password);//忽略Password映射，
-			config.Bind(x => x.UserName, x => x.Name);//Name映射成UserName
+			config.Ignore(x => x.Password);//忽略Password映射
 		};
-
-		//DtoToEntity, Name映射成UserName
-		base.MapToEntityConfig = config => config.Bind(x => x.Name, x => x.UserName);
 	}
 
 }
