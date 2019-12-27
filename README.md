@@ -37,7 +37,7 @@ public class DemoDbContext : DbContext
    services.AddControllers();
 }
 ```
-4.  【可选】如果不用泛型Repository注入,可以自定义Repository,需要继承Repository,IRepository,可以重写基类CURD方法
+4.  【可选】如果不用泛型AppService注入,可以自定义AppService,需要继承AppService,IAppService,可以重写基类CURD方法,Mapper映射配置
 ```cs
 public class UserAppService : AppService<User, UserDto>, IUserAppService
 {
@@ -91,7 +91,8 @@ public class UserController : ControllerBase
 
 ## 详细介绍
 **1. Wei.Repository 文档**
-	> [Wei.Repository](https://github.com/a34546/Wei.Repository/blob/master/README.md)
+
+> 	[Wei.Repository](https://github.com/a34546/Wei.Repository/blob/master/README.md)
 
 **2. IAppService接口**
 ```cs
