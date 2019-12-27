@@ -6,13 +6,21 @@
 > Nuget引用包：Wei.Service
 
 
-1. 实体对象需要继承Entity
+1. 定义实体和Dto
 ```cs
 public class User : Entity
 {
-public string UserName { get; set; }
-public string Password { get; set; }
-public string Mobile { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string Mobile { get; set; }
+}
+
+public class UserDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Password { get; set; }
+    public string Mobile { get; set; }
 }
 ```
 2. 【可选】继承BaseDbContext,如果不需要DbContext，可以忽略该步骤
