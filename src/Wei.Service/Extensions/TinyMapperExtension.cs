@@ -33,8 +33,10 @@ namespace Wei.Service
             {
                 if (!TinyMapper.BindingExists<Tsource, Target>())
                 {
-                    if (config == null) TinyMapper.Bind<Tsource, Target>();
-                    TinyMapper.Bind(config);
+                    if (config == null)
+                        TinyMapper.Bind<Tsource, Target>();
+                    else
+                        TinyMapper.Bind(config);
                 }
                 return TinyMapper.Map<Target>(obj);
             }

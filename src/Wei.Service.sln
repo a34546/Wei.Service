@@ -5,13 +5,11 @@ VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Service", "Wei.Service\Wei.Service.csproj", "{36A607FF-49CB-4C1E-8240-15ABBC2B3E68}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTest", "UnitTest", "{A8542ABA-3107-472B-ABB3-1A06FF6F3A10}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Service.Test", "Wei.Service.Test\Wei.Service.Test.csproj", "{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Service.Test", "Wei.Service.Test\Wei.Service.Test.csproj", "{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{BD9189A1-E937-40E2-831B-F30B430049CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiDemo", "WebApiDemo\WebApiDemo.csproj", "{FA986C5B-EAF6-4656-92CD-73F5A0841793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiDemo", "WebApiDemo\WebApiDemo.csproj", "{FA986C5B-EAF6-4656-92CD-73F5A0841793}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F8E031D1-1D92-4ADE-BD92-E133A1DC2DD3} = {A8542ABA-3107-472B-ABB3-1A06FF6F3A10}
 		{FA986C5B-EAF6-4656-92CD-73F5A0841793} = {BD9189A1-E937-40E2-831B-F30B430049CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

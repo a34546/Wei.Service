@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Description>基于Wei.Repository,封装的AppService，提供基本的CURD操作,也可以继承AppService，重写CURD操作，实现Entity&gt;Dto自动映射</Description>
     <NeutralLanguage>中文</NeutralLanguage>
     <PackageProjectUrl>https://github.com/a34546/Wei.Service.git</PackageProjectUrl>
@@ -11,10 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="TinyMapper" Version="3.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Wei.Repository\src\Wei.Repository\Wei.Repository.csproj" />
+    <PackageReference Include="Wei.Repository" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

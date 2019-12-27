@@ -12,11 +12,11 @@ namespace WebApiDemo.Data
     {
         public UserAppService(IRepository<User> repository, IUnitOfWork unitOfWork) : base(repository, unitOfWork)
         {
-            //EntityToDto, 忽略Password映射，Name映射成UserName
+            //EntityToDto
             base.MapToDtoConfig = config =>
             {
-                config.Ignore(x => x.Password);
-                config.Bind(x => x.UserName, x => x.Name);
+                config.Ignore(x => x.Password);//忽略Password映射，
+                config.Bind(x => x.UserName, x => x.Name);//Name映射成UserName
             };
 
             //DtoToEntity, Name映射成UserName

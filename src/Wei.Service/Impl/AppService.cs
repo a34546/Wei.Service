@@ -1,7 +1,9 @@
-﻿using Nelibur.ObjectMapper;
+﻿using Microsoft.EntityFrameworkCore;
+using Nelibur.ObjectMapper;
 using Nelibur.ObjectMapper.Bindings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
@@ -112,6 +114,16 @@ namespace Wei.Service
         public virtual async Task<TDto> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var entity = await Repository.FirstOrDefaultAsync(predicate);
+            return ToDto(entity);
+        }
+        public virtual TDto FirstOrDefaultNoTracking(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entity = Repository.QueryNoTracking(predicate).FirstOrDefault();
+            return ToDto(entity);
+        }
+        public virtual async Task<TDto> FirstOrDefaultNoTrackingAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entity = await Repository.QueryNoTracking(predicate).FirstOrDefaultAsync();
             return ToDto(entity);
         }
         #endregion
