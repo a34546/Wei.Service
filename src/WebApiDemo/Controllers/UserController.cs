@@ -8,7 +8,6 @@ using Nelibur.ObjectMapper;
 using WebApiDemo.Data;
 using Wei.Repository;
 using Wei.Service;
-//using Wei.Service;
 
 namespace WebApiDemo.Controllers
 {
